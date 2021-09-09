@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,8 +33,16 @@ namespace KIS.Controllers
         {
             var reader = new StreamReader(Request.Body, Encoding.UTF8);
             var body = await reader.ReadToEndAsync();
-            var post = JsonConvert.DeserializeObject<Post>(body);
+            var submitedPost = JsonConvert.DeserializeObject<PostSubmit>(body);
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(submitedPost.Token);
+
+            var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+            var post = new Post();
             post.Id = Guid.NewGuid();
+            post.UserId = userId;
+            post.Date = DateTime.Now;
+            post.Content = submitedPost.Content;
 
             _unitOfWork.postManager.AddPost(post);
             return Ok(post);

@@ -9,7 +9,7 @@ const NavbarGuest = ( ) => {
             </h1>
             <ul>
                 <li>
-                    <Link to='/login'>Log In</Link>
+                    <Link to='/'>Log In</Link>
                 </li>
                 <li>
                     <Link to='/register'>Register</Link>
@@ -34,6 +34,8 @@ const NavbarLogged = () => {
             <ul>
                 <li>
                     <Link to='/'>Home</Link>
+                    <Link to='/create'>Create a Post</Link>
+
                 </li>
             </ul>
         </nav>

@@ -101,7 +101,8 @@ function LogIn({ setToken } : {setToken:any}) {
                     variant="outlined"
                     margin="normal"
                     label="Username"
-
+                    helperText={errors.userName?.message}
+                    error={!!errors.userName?.message}
                     fullWidth
                     required
                 />
@@ -111,7 +112,8 @@ function LogIn({ setToken } : {setToken:any}) {
                     margin="normal"
                     label="Password"
                     type="password"
-
+                    helperText={errors.password?.message}
+                    error={!!errors.password?.message}
                     fullWidth
                     required
                 />

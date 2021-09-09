@@ -53,6 +53,7 @@ namespace KIS.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
+                
                 var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
                 context.Items["User"] = userManager.GetUserByID(userId);

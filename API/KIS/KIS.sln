@@ -5,27 +5,6 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KIS", "KIS\KIS.csproj", "{39F9D98C-4E71-4693-B2A2-8CF8F9944184}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp", "..\..\ClientApp\", "{9BC5E0B4-1711-4C54-A8AA-A50078958FFA}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_60153"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\ClientApp\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60153\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_60153"
-		Release.AspNetCompiler.PhysicalPath = "..\..\ClientApp\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60153\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "60153"
-		SlnRelativePath = "..\..\ClientApp\"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,10 +15,6 @@ Global
 		{39F9D98C-4E71-4693-B2A2-8CF8F9944184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39F9D98C-4E71-4693-B2A2-8CF8F9944184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39F9D98C-4E71-4693-B2A2-8CF8F9944184}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BC5E0B4-1711-4C54-A8AA-A50078958FFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BC5E0B4-1711-4C54-A8AA-A50078958FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BC5E0B4-1711-4C54-A8AA-A50078958FFA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BC5E0B4-1711-4C54-A8AA-A50078958FFA}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

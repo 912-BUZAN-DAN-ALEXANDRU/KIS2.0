@@ -74,6 +74,7 @@ namespace KIS.Managers
                 return null;
 
             var token = GenerateJwtToken(user);
+          //  _userRepository.UpdateUser(user);
 
             return new LoginResponse(user, token);
         }

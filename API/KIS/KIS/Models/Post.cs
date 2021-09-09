@@ -15,7 +15,6 @@ namespace KIS.Models
 
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public byte[] PhotoPath { get; set; }
         public DateTime Date { get; set; }
         public string Content { get; set; }
 

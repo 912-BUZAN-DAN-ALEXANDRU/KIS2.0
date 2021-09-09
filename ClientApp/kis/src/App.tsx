@@ -7,7 +7,7 @@ import './custom.css'
 import SignUp from './signup';
 import LogIn from './login';
 import Home from './home';
-//import PhotoUpload from './components/PhotoUpload';
+import PostUpload from './postupload';
 
 import { NavbarLogged, NavbarGuest } from './navbar';
 import useToken from './useToken';
@@ -22,7 +22,7 @@ function App() {
                 <div className='container'>
                     <Switch>
                         <Route exact path='/'><LogIn setToken={setToken} /></Route>
-                        <Route exact path='/register' component={SignUp} />
+                        <Route exact path='/register' component={SignUp}  />
                     </Switch>
                 </div>
             </div>
@@ -38,6 +38,7 @@ function App() {
                 <div className='container'>
                     <Switch>
                         <Route exact path='/' component={Home} />
+                        <Route exact path='/create'><PostUpload token={token}/></Route>
                     </Switch>
                 </div>
             </div>

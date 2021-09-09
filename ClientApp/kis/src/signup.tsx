@@ -89,8 +89,8 @@ function SignUp() {
                     variant="outlined"
                     margin="normal"
                     label="Email"
-                  //  helperText={errors.email?.message}
-                   // error={!!errors.email?.message}
+                    helperText={errors.email?.message}
+                    error={!!errors.email?.message}
                     fullWidth
                     required
                 />
@@ -99,7 +99,8 @@ function SignUp() {
                     variant="outlined"
                     margin="normal"
                     label="Username"
-
+                    helperText={errors.userName?.message}
+                    error={!!errors.userName?.message}
                     fullWidth
                     required
                 />
@@ -109,7 +110,8 @@ function SignUp() {
                     margin="normal"
                     label="Password"
                     type="password"
-
+                    helperText={errors.password?.message}
+                    error={!!errors.password?.message}
                     fullWidth
                     required
                 />
@@ -120,7 +122,8 @@ function SignUp() {
                     margin="normal"
                     label="Confirm Password"
                     type="password"
-
+                    helperText={errors.confirmPassword?.message}
+                    error={!!errors.confirmPassword?.message}
                     fullWidth
                     required
                 />
