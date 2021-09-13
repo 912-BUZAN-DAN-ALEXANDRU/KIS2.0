@@ -24,7 +24,8 @@ namespace KIS.Controllers
         [Route("Posts")]
         public IEnumerable<Post> GetPosts()
         {
-            return _unitOfWork.postManager.GetPosts();
+             var posts = _unitOfWork.postManager.GetPosts();
+            return posts;
         }
 
         [HttpPost]
@@ -42,6 +43,7 @@ namespace KIS.Controllers
             post.Id = Guid.NewGuid();
             post.UserId = userId;
             post.Date = DateTime.Now;
+            post.Username = _unitOfWork.userManager.GetUserByID(userId).Name;
             post.Content = submitedPost.Content;
 
             _unitOfWork.postManager.AddPost(post);

@@ -17,6 +17,7 @@ namespace KIS.Models
         public Guid UserId { get; set; }
         public DateTime Date { get; set; }
         public string Content { get; set; }
+        public string Username { get; set; }
 
         public virtual User User { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

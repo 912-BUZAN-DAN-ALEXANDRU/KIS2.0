@@ -28,7 +28,9 @@ namespace KIS
             services.AddControllersWithViews();
             services.AddCors();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDbContext<KISContext>(ServiceLifetime.Singleton);
             services.AddSingleton<UserRepository>();
             services.AddSingleton<PostRepository>();

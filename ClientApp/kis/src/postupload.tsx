@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { TextField, makeStyles, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PostUpload(token: any){
   const [text, setText] = useState("");
+  let history = useHistory();
 
   const { heading, submitButton } = useStyles();
 
@@ -23,16 +24,20 @@ function PostUpload(token: any){
       setText(event.target.value);
   }
 
-  const onSubmit = (event : any) => {
+  const OnSubmit = (event : any) => {
     var submitedPost = {"Content": text, "Token": token.token};
-    console.log(submitedPost);
+
     return fetch('https://localhost:44324/Posts/Add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(submitedPost)
+
     }).then(response => {
+
+      history.push('/')
+
       if (!response.ok) {
         return { code: response.status, message: "Request failed error " + response.statusText };
       }
@@ -55,7 +60,7 @@ return <div>
               color="primary"
               className={submitButton}
 
-              onClick={onSubmit}
+              onClick={OnSubmit}
 
           >
               Post
