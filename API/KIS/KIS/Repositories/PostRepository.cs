@@ -16,7 +16,7 @@ namespace KIS.Repositories
 
         public List<Post> GetPosts()
         {
-            return _context.Posts.Select(item => item).ToList();
+            return _context.Posts.Select(item => item).OrderByDescending(item => item.Date).ToList();
         }
 
         public Post GetPostByID(Guid ID)

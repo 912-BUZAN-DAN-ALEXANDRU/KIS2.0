@@ -31,18 +31,18 @@ namespace KIS
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<KISContext>(ServiceLifetime.Singleton);
-            services.AddSingleton<UserRepository>();
-            services.AddSingleton<PostRepository>();
-            services.AddSingleton<ReactionRepository>();
-            services.AddSingleton<CommentRepository>();
-            services.AddSingleton<UserManager>();
-            services.AddSingleton<PostManager>();
-            services.AddSingleton<ReactionManager>();
-            services.AddSingleton<CommentManager>();
-            services.AddSingleton<AuthorizeAttribute>();
-            //services.AddSingleton<JwtMiddleware>();
-            services.AddSingleton<UnitOfWork>();
+            services.AddDbContext<KISContext>(ServiceLifetime.Transient);
+            services.AddTransient<UserRepository>();
+            services.AddTransient<PostRepository>();
+            services.AddTransient<ReactionRepository>();
+            services.AddTransient<CommentRepository>();
+            services.AddTransient<UserManager>();
+            services.AddTransient<PostManager>();
+            services.AddTransient<ReactionManager>();
+            services.AddTransient<CommentManager>();
+            services.AddTransient<AuthorizeAttribute>();
+            //services.AddTransient<JwtMiddleware>();
+            services.AddTransient<UnitOfWork>();
             // In production, the React files will be served from this directory
 
         }

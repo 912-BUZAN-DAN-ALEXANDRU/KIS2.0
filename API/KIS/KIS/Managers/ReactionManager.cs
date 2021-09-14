@@ -37,7 +37,21 @@ namespace KIS.Managers
 
         public void AddReaction(Reaction reaction)
         {
-            _reactionRepository.AddReaction(reaction);
+            var r = GetReactionsByUser(reaction.UserId).Where(react => react.PostId == reaction.PostId).FirstOrDefault();
+
+            if (r == null)
+            {
+                _reactionRepository.AddReaction(reaction);
+                return;
+            }
+            if (r.ReactionType == reaction.ReactionType)
+            {
+                _reactionRepository.DeleteReaction(r.Id);
+                return;
+            }
+            
+            reaction.Id = r.Id;
+            UpdateReaction(reaction);
         }
 
         public bool DeleteReaction(Guid reactionID)

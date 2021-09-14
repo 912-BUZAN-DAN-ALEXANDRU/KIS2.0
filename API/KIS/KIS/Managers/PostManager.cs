@@ -48,5 +48,7 @@ namespace KIS.Managers
             
             return _postRepository.DeletePost(postID);
         }
+
+       
     }
 }
