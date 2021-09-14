@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Home() {
+function Home(token: any) {
   const classes = useStyles();
 
   const [posts, updatePosts] = React.useState([]);
@@ -20,11 +20,10 @@ function Home() {
     fetch('https://localhost:44324/Posts',{method: 'GET',})
           .then(response => response.json())
           .then(response => updatePosts(response));
-  }, []);
-
+  });
   return <div className={classes.root}>
             <Grid container spacing={3}>
-            {posts.map(post => <Grid item xs><PostCard jsonPost={post} /></Grid>)}
+            {posts.map(post => <Grid item xs><PostCard param={{post, token}}/></Grid>)}
             </Grid>
          </div>
 }

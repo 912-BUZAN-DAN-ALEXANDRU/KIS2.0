@@ -37,7 +37,7 @@ function App() {
                 <NavbarLogged />
                 <div className='container'>
                     <Switch>
-                        <Route exact path='/' component={Home} />
+                        <Route exact path='/'> <Home token={token}/> </Route>
                         <Route exact path='/create'><PostUpload token={token}/></Route>
                     </Switch>
                 </div>

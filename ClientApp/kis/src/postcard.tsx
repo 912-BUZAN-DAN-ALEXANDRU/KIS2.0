@@ -37,17 +37,137 @@ const useStyles = makeStyles((theme) => ({
 
   avatar: {
     backgroundColor: red[500]
+  },
+
+  commentHeader: {
+//    fullWidth,
   }
 }));
 
-export default function PostCard(jsonPost: any) {
+export default function PostCard(param: any) {
   const classes = useStyles();
+  const [reactions, updateReactions] = React.useState([] as any[]);
+  const [comments, updateComments] = React.useState([] as any[]);
   const [expanded, setExpanded] = React.useState(false);
-console.log(jsonPost);
-var post = jsonPost.jsonPost;
+  const [draftComment, setDraftComment] = React.useState("");
+  const [liked, setLiked] = React.useState(false);
+  const [loved, setLoved] = React.useState(false);
+  const [disliked, setDisliked] = React.useState(false);
+
+  var post = param.param.post;
+  var token = param.param.token;
+
+  React.useEffect(function effectFunction() {
+    update();
+  });
+
+  const update = async () => {
+    await fetch('https://localhost:44324/' + post.id + '/Reactions', {method: 'GET'})
+                .then(response => response.json())
+                .then(response =>updateReactions(response));
+    await fetch('https://localhost:44324/' + post.id + '/Comments', {method: 'GET'})
+                            .then(response => response.json())
+                            .then(response =>updateComments(response));
+  };
+
   const handleExpandClick = () => {
+    console.log(comments);
     setExpanded(!expanded);
   };
+
+
+
+  const handleLikeButton =() => {
+      var reaction = { "PostId":post.id, "ReactionType":0, "Token": token.token};
+      return fetch('https://localhost:44324/Reactions/Add', {method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reaction)
+                  }).then(response => {
+                                      if (!response.ok) {
+                                          return { code: response.status, message: "Request failed error " + response.statusText };
+                                      }
+                        update();
+                        if (liked){
+                          setLiked(false);
+                        }
+                        else {
+                          setLiked(true);
+                        }
+
+                        setLoved(false);
+                        setDisliked(false);
+                      });
+  }
+
+  const handleLoveButton =() => {
+    var reaction = {"PostId":post.id, "ReactionType":1, "Token": token.token};
+    return fetch('https://localhost:44324/Reactions/Add', {method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(reaction)
+                }).then(response => {
+                                    if (!response.ok) {
+                                        return { code: response.status, message: "Request failed error " + response.statusText };
+                                    }
+                                    update();
+                                    if (loved){
+                                      setLoved(false);
+                                    }
+                                    else {
+                                      setLoved(true);
+                                    }
+
+                                    setLiked(false);
+                                    setDisliked(false);
+
+                    });
+  }
+
+  const handleDislikeButton =() => {
+    var reaction = { "PostId":post.id, "ReactionType":2, "Token": token.token};
+    return fetch('https://localhost:44324/Reactions/Add', {method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(reaction)
+                }).then(response => {
+                                    if (!response.ok) {
+                                        return { code: response.status, message: "Request failed error " + response.statusText };
+                                    }
+                                    update();
+                                    if (disliked){
+                                      setDisliked(false);
+                                    }
+                                    else {
+                                      setDisliked(true);
+                                    }
+
+                                    setLoved(false);
+                                    setLiked(false);
+                    });
+  }
+
+  const sendComment = () => {
+      var comment = {"PostId": post.id, "Content": draftComment, "Token": token.token};
+      return fetch('https://localhost:44324/Comments/Add', {method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(comment)
+                  }).then(response => {
+                                      if (!response.ok) {
+                                          return { code: response.status, message: "Request failed error " + response.statusText };
+                                      }
+                                      update();
+                                    }
+                                  );
+  }
+   const handleChange = (event: any) => {
+     setDraftComment(event.target.value);
+   }
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -60,15 +180,20 @@ var post = jsonPost.jsonPost;
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="like">
+        <IconButton aria-label="like" onClick={handleLikeButton} color={liked ? 'primary' : 'default'}>
           <ThumbUp />
         </IconButton>
-        <IconButton aria-label="love">
+      <span>{reactions.filter(r => r.reactionType == 0).length}</span>
+        <IconButton aria-label="love" onClick={handleLoveButton} color={loved ? 'secondary' : 'default'}>
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="dislike">
+          <span>{reactions.filter(r => r.reactionType == 1).length}</span>
+
+        <IconButton aria-label="dislike" onClick={handleDislikeButton} color={disliked ? 'primary' : 'default'}>
           <ThumbDown />
         </IconButton>
+          <span>{ reactions.filter(r => r.reactionType == 2).length}</span>
+
         <IconButton
           className={clsx(classes.commentButton)}
           onClick={handleExpandClick}
@@ -78,21 +203,32 @@ var post = jsonPost.jsonPost;
           <Comment />
         </IconButton>
       </CardActions>
-
+      <CardContent>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        {comments.map(comm => <Card className={classes.commentHeader}>
+                                  <CardHeader
+                                      subheader={comm.username}
+                                  />
+                                <CardContent>
+                                  <Typography variant="body2" color="textSecondary" component="p">
+                                    {comm.content}
+                                  </Typography>
+                                </CardContent>
+                              </Card>
+        )}
+
           <Grid container spacing={1}>
             <Grid item xs={10}>
-              <TextField id="standard-basic" label="Write.." fullWidth />
+              <TextField id="standard-basic" label="Write.." onChange={handleChange} onClick={sendComment} fullWidth />
             </Grid>
             <Grid item xs={2}>
-              <IconButton aria-label="dislike">
+              <IconButton aria-label="dislike" onClick={sendComment}>
                 <Send />
               </IconButton>
             </Grid>
           </Grid>
+          </Collapse>
         </CardContent>
-      </Collapse>
     </Card>
   );
 }
